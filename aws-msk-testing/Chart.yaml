@@ -1,0 +1,6 @@
+apiVersion: v2
+name: aws-msk-testing
+description: 創建兩個 Pod，分別為 Kafka Producer 和 Kafka Consumer，並使用 AWS MSK 進行測試。
+type: application
+version: 0.1.0
+appVersion: "latest"

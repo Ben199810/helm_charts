@@ -1,0 +1,11 @@
+yamlApplicationConfig:
+  kafka:
+    clusters:
+      - name: cluster-1
+        bootstrapServers: localhost:9092
+  auth:
+    type: disabled
+  management:
+    health:
+      ldap:
+        enabled: false
