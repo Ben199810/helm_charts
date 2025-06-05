@@ -1,0 +1,8 @@
+envFile: interface.dev
+filestore:
+  initFileDirsEnabled: true
+  initFileDirs: []
+  name: ""
+  zone: ""
+  ip: ""
+  volume: ""

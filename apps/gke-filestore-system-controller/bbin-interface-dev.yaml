@@ -1,0 +1,6 @@
+filestore:
+  initFileDirsEnabled: false
+  name: interface-storage-basic-hdd
+  zone: asia-east1-a
+  ip: 172.18.0.162
+  volume: storage/{{ .Values.envFile }}

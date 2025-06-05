@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: connect-filestore-pv
+  labels:
+    app: connect-filestore-pv
+spec:
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 20Gi
+  claimRef:
+    name: filestore-volume-claim
+    namespace: {{ .Release.Namespace }}
+  csi:
+    driver: filestore.csi.storage.gke.io
+    volumeAttributes:
+      ip: {{ .Values.filestore.ip }}
+      volume: {{ tpl .Values.filestore.volume . }}
+    volumeHandle: modeInstance/{{ .Values.filestore.zone }}/{{ .Values.filestore.name }}/{{ tpl .Values.filestore.volume . }}
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: filestore-volume-claim
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: connect-filestore-pv
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: ""
+  volumeName: connect-filestore-pv

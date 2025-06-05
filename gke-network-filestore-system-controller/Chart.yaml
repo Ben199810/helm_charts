@@ -1,0 +1,6 @@
+apiVersion: v2
+name: gke-network-filestore-system-controller
+description: 建立 GKE 內連線 Google Cloud Filestore 的系統控制器。
+type: application
+version: 0.1.0
+appVersion: "latest"

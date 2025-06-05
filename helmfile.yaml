@@ -1,8 +1,5 @@
-helmDefaults:
-  createNamespace: true
-  atomic: true
-  diffArgs:
-    - "--context 5"
+bases:
+  - environments.yaml
 
 # 本機電腦下載 kafka-ui 的 helm chart repo
 repositories:
@@ -20,6 +17,13 @@ templates:
     version: 0.1.0
     namespace: test
 
+  gke-network-filestore-system-controller: &gke-network-filestore-system-controller
+    chart: ./gke-network-filestore-system-controller
+    version: 0.1.0
+    namespace: test
+    values:
+      - apps/gke-filestore-system-controller/{{`{{ .Environment.Name }}`}}.yaml
+
 releases:
   - name: kafka-ui
     <<: *kafka-ui
@@ -30,3 +34,6 @@ releases:
     <<: *aws-msk-testing
     values:
       - apps/aws-msk-testing/values.yaml
+
+  - name: gke-filestore-system-controller
+    <<: *gke-network-filestore-system-controller
