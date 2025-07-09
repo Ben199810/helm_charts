@@ -1,0 +1,4 @@
+fullnameOverride: test-gcs-cloud-service-account
+
+serviceAccountName: cloud-service-game-entrance
+gcsBucketName: bbgp-dev-data-storage-service

@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "test-ksa-permissions.fullname" . }}-test-connection"
+  labels:
+    {{- include "test-ksa-permissions.labels" . | nindent 4 }}
+spec:
+  serviceAccountName: "{{ .Values.serviceAccountName }}"
+  containers:
+    - name: test-gcs
+      image: google/cloud-sdk:slim
+      command: [ "/bin/bash", "-c" ]
+      args: ["sleep 3600"] # 暫時讓容器保持運行，方便手動測試
+      # args:
+      #   - |
+      #     BUCKET="gs://{{ .Values.gcsBucketName }}"
+      #     TEST_FILE="test-file-$(date +%s).txt"
+      #     TEST_CONTENT="Hello from Helm test - $(date)"
+          
+      #     echo "=== GCS Permissions Test ==="
+      #     echo "Testing bucket: $BUCKET"
+          
+      #     # 測試查看 (List)
+      #     echo "1. Testing LIST permission..."
+      #     gsutil ls "$BUCKET/" || echo "List failed or bucket is empty"
+          
+      #     # 測試新增 (Create/Upload)
+      #     echo "2. Testing CREATE permission..."
+      #     echo "$TEST_CONTENT" > "/tmp/$TEST_FILE"
+      #     gsutil cp "/tmp/$TEST_FILE" "$BUCKET/$TEST_FILE"
+      #     echo "File uploaded successfully"
+          
+      #     # 測試查看檔案內容 (Read)
+      #     echo "3. Testing READ permission..."
+      #     gsutil cat "$BUCKET/$TEST_FILE"
+          
+      #     # 測試修改 (Update)
+      #     echo "4. Testing UPDATE permission..."
+      #     UPDATED_CONTENT="Updated: $TEST_CONTENT"
+      #     echo "$UPDATED_CONTENT" > "/tmp/$TEST_FILE"
+      #     gsutil cp "/tmp/$TEST_FILE" "$BUCKET/$TEST_FILE"
+      #     echo "File updated successfully"
+          
+      #     # 驗證修改
+      #     echo "5. Verifying update..."
+      #     gsutil cat "$BUCKET/$TEST_FILE"
+          
+      #     # 測試刪除 (Delete)
+      #     echo "6. Testing DELETE permission..."
+      #     gsutil rm "$BUCKET/$TEST_FILE"
+      #     echo "File deleted successfully"
+          
+      #     # 驗證刪除
+      #     echo "7. Verifying deletion..."
+      #     if gsutil ls "$BUCKET/$TEST_FILE" 2>/dev/null; then
+      #       echo "ERROR: File still exists after deletion"
+      #       exit 1
+      #     else
+      #       echo "File successfully deleted"
+      #     fi
+          
+      #     echo "=== All GCS permissions tests completed successfully! ==="
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          cpu: 200m
+          memory: 256Mi
+  restartPolicy: Never

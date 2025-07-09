@@ -7,3 +7,5 @@ helmDefaults:
 environments:
   bbin-interface-dev:
     kubeContext: gke_gcp-20220425-004_asia-east1-b_bbin-interface-dev
+  bbgp-outside-dev:
+    
